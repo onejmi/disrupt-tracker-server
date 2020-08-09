@@ -5,7 +5,8 @@
   "main": "src/app.ts",
   "scripts": {
     "compile": "tsc",
-    "start": "node ./dist/app.js"
+    "start": "node ./dist/app.js",
+    "serve": "npm run compile && npm run start"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,15 @@
   },
   "homepage": "https://github.com/scarger/disrupt-tracker-server#readme",
   "dependencies": {
+    "@octokit/auth-token": "^2.4.2",
+    "@octokit/request": "^5.4.7",
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^3.6.0",
     "passport": "^0.4.1",
+    "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {

@@ -1,8 +1,11 @@
 import DataCollection from './collection'
 
 export interface User {
-    email: string
-    googleId: string
+    email: string,
+    name: string,
+    profileImageUrl?: string
+    googleId?: string
+    githubId?: string
 }
 
 class UserCollection extends DataCollection<User> {
