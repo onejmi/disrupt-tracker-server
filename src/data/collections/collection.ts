@@ -1,4 +1,4 @@
-import { Collection, FilterQuery } from "mongodb"
+import { Collection, FilterQuery, UpdateQuery } from "mongodb"
 import { database } from '../db-manager'
 
 export default abstract class DataCollection<T> {
@@ -29,11 +29,11 @@ export default abstract class DataCollection<T> {
         return await this.col.find(filter).limit(1).count(true) > 0
     }
 
-    async update(filter: FilterQuery<any>, item: T, multiple: boolean = false, upsert: boolean = false) {
+    async update(filter: FilterQuery<any>, update: UpdateQuery<any>, multiple: boolean = false, upsert: boolean = false) {
         if(multiple) {
-            return await this.col.updateMany(filter, item, {upsert: upsert})
+            return await this.col.updateMany(filter, update, {upsert: upsert})
         }
-        return await this.col.updateOne(filter, item, {upsert: upsert})
+        return await this.col.updateOne(filter, update, {upsert: upsert})
     }
 
     async deleteWhere(filter: FilterQuery<any>, multiple: boolean = false) {

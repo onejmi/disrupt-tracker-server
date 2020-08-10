@@ -38,6 +38,8 @@ export function begin() {
                     const res = await userCollection.insert({
                         email: profile.emails[0].value,
                         name: profile.displayName,
+                        disruptions: [],
+                        tags: [],
                         profileImageUrl: profile.photos[0].value,
                         googleId: profile.id
                     })
@@ -65,6 +67,8 @@ export function begin() {
                     const res = await userCollection.insert({
                         email: email,
                         name: profile.displayName,
+                        disruptions: [],
+                        tags: [],
                         profileImageUrl: profile.photos[0].value,
                         githubId: profile.id
                     })
