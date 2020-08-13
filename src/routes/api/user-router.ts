@@ -3,6 +3,9 @@ import { userCollection, Disruption, Tag } from '../../data/collections/users'
 import { ObjectId, PushOperator, PullOperator, UpdateWriteOpResult } from 'mongodb'
 export const userRouter = Router()
 
+const tagLimit = 50
+const nameLimit = 18
+
 userRouter.get('/disruptions', async (req: any, res) => {
     res.json(req.user.disruptions)
 })
@@ -48,12 +51,17 @@ userRouter.get('/tags', (req: any, res) => {
 })
 
 userRouter.post('/tags', async (req: any, res) => {
-    if(req.user.tags.length >= 50) {
+    if(req.user.tags.length >= tagLimit) {
         res.status(429)
         res.send({ status: "You've reached the tag limit for your tier!" })
     } else {
         const id = new ObjectId(req.user._id)
         const name = req.body.name
+        if(!name || name.length > nameLimit) {
+            res.status(422)
+            res.json({ status: "Tag name length is not between 1-" + nameLimit + " characters." })
+            return
+        }
         const color = req.body.color
         const tag : Tag = {
             id: new ObjectId(),
@@ -69,7 +77,12 @@ userRouter.post('/tags', async (req: any, res) => {
 userRouter.patch('/tags', async (req: any, res) => {
     const id = new ObjectId(req.user._id)
     const tagId = ObjectId.createFromHexString(req.body.tagId)
-    const name = req.body.name 
+    let name = req.body.name
+    if(name && name.length > nameLimit) {
+        res.status(422)
+        res.json({ status: "Tag name is too long." })
+        return
+    }
     const color = req.body.color
     const payload = { ...( name && { 'tags.$.name' : name } ), ...( color && { 'tags.$.color' : color } ) }
     const update = await userCollection.update(
