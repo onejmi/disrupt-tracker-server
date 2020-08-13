@@ -1,13 +1,15 @@
 import DataCollection from './collection'
+import { ObjectId } from 'mongodb'
 
 export interface Tag {
-    readonly id: number
+    readonly id: ObjectId
     name: string
+    color: number
     positive?: boolean
 }
 
 export interface Disruption {
-    tagID: number
+    tagID: ObjectId
     readonly startTime: number
     endTime: number
 }
