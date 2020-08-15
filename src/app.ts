@@ -7,8 +7,12 @@ import bodyParser from 'body-parser'
 import keys from './config/keys'
 
 const app = express()
+const server = require('http').createServer(app)
 const cors = require('cors')
-const session = require('cookie-session')
+const session = require('cookie-session')({
+  keys: [keys.session.secret],
+  maxAge: 24 * 60 * 60 * 1000
+})
 const passport = require('passport')
 
 const port = 3000
@@ -23,10 +27,7 @@ setupDatabase().then(() => {
 const corsConfig = cors({credentials: true, origin: frontendLocation})
 //app.options('*', corsConfig)
 app.use(corsConfig)
-app.use(session({
-  keys: [keys.session.secret],
-  maxAge: 24 * 60 * 60 * 1000
-}))
+app.use(session)
 app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -34,10 +35,6 @@ app.use(passport.session())
 app.use('/auth', authRouter)
 app.use('/api', apiRouter)
 
-app.get('/', (req: any, res: any) => {
-  res.send('Hello World!')
-})
-
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Backend listening at http://localhost:${port}`)
 })
