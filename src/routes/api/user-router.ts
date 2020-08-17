@@ -17,6 +17,16 @@ userRouter.post('/disruptions', async (req: any, res) => {
         startTime: req.body.startTime,
         endTime: req.body.endTime
     }
+    const lastElemIndex = req.user.disruptions.length - 1
+    if(lastElemIndex > -1 && req.user.disruptions[lastElemIndex].endTime > disruption.startTime) {
+        const lastDisrupt = req.user.disruptions[lastElemIndex]
+        if(lastDisrupt.endTime >= disruption.endTime) {
+            res.status(405)
+            res.json({ status: "Time conflict with your last disruption!" })
+            return
+        }
+        disruption.startTime = lastDisrupt.endTime
+    }
     //todo figure out what PushOperator<Disruption> means :P
     const pushOperation : PushOperator<Disruption> = { disruptions: disruption }
     const update = await userCollection.update({_id: id}, { $push: pushOperation })

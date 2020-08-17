@@ -10,7 +10,7 @@ export interface Tag {
 
 export interface Disruption {
     tagID: ObjectId
-    readonly startTime: number
+    startTime: number
     endTime: number
 }
 
