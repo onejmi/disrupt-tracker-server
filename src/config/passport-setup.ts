@@ -41,8 +41,10 @@ export function begin() {
                         name: profile.displayName,
                         disruptions: [],
                         tags: [],
+                        threshold: 100,
+                        nonce: 0,
                         profileImageUrl: profile.photos[0].value,
-                        googleId: profile.id
+                        googleId: profile.id,
                     })
                     user = res.ops[0]
                 }
@@ -70,6 +72,8 @@ export function begin() {
                         name: profile.displayName,
                         disruptions: [],
                         tags: [],
+                        threshold: 100,
+                        nonce: 0,
                         profileImageUrl: profile.photos[0].value,
                         githubId: profile.id
                     })

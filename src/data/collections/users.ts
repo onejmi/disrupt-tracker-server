@@ -19,6 +19,8 @@ export interface User {
     name: string
     disruptions: Disruption[]
     tags: Tag[]
+    threshold: number,
+    nonce: number,
     profileImageUrl?: string
     googleId?: string
     githubId?: string

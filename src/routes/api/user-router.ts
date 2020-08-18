@@ -7,7 +7,7 @@ const tagLimit = 50
 const nameLimit = 18
 
 userRouter.get('/disruptions', async (req: any, res) => {
-    res.json(req.user.disruptions)
+    res.json(req.user?.disruptions)
 })
 
 userRouter.post('/disruptions', async (req: any, res) => {
@@ -57,7 +57,7 @@ userRouter.delete('/disruptions', async (req: any, res) => {
 })
 
 userRouter.get('/tags', (req: any, res) => {
-    res.json(req.user.tags)
+    res.json(req.user?.tags)
 })
 
 userRouter.post('/tags', async (req: any, res) => {
@@ -112,5 +112,27 @@ userRouter.delete('/tags', async (req: any, res) => {
         const pullOperation : PullOperator<Tag> = { tags: { id: tagId } }
         update = await userCollection.update({_id: id}, { $pull: pullOperation })
     }
+    res.json(update.upsertedId)
+})
+
+userRouter.get('/threshold', async (req: any, res) => {
+    res.json({ threshold: req.user?.threshold })
+})
+
+userRouter.put('/threshold', async (req: any, res) => {
+    const id = new ObjectId(req.user._id)
+    let update : UpdateWriteOpResult = 
+        await userCollection.update({_id: id}, { $set: { threshold: req.body.threshold } })
+    res.json(update.upsertedId)
+})
+
+userRouter.get('/nonce', async (req: any, res) => {
+    res.json({ nonce: req.user?.nonce })
+})
+
+userRouter.put('/nonce', async (req: any, res) => {
+    const id = new ObjectId(req.user._id)
+    let update : UpdateWriteOpResult = 
+        await userCollection.update({_id: id}, { $set: { nonce: req.body.nonce } })
     res.json(update.upsertedId)
 })
