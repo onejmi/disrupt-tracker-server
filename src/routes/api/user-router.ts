@@ -95,6 +95,10 @@ userRouter.patch('/tags', async (req: any, res) => {
     }
     const color = req.body.color
     const payload = { ...( name && { 'tags.$.name' : name } ), ...( color && { 'tags.$.color' : color } ) }
+    if(Object.keys(payload).length === 0 && payload.constructor === Object) {
+        res.json({ status: "Empty edit!" }) 
+        return
+    }
     const update = await userCollection.update(
         {_id: id, 'tags.id': tagId}, 
         { $set: payload }
