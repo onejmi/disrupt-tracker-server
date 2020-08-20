@@ -112,8 +112,10 @@ userRouter.delete('/tags', async (req: any, res) => {
     if(req.body.all) {
         update = await userCollection.update({_id: id}, { $set: { tags: [] } })
     } else {
-        const tagId : number = req.body.tagId
+        const tagId : ObjectId = ObjectId.createFromHexString(req.body.tagId)
         const pullOperation : PullOperator<Tag> = { tags: { id: tagId } }
+        const pullDisruptionsOperation : PullOperator<Disruption> = { disruptions: { tagID: tagId } }
+        await userCollection.update({_id: id}, { $pull: pullDisruptionsOperation }, true)
         update = await userCollection.update({_id: id}, { $pull: pullOperation })
     }
     res.json(update.upsertedId)
