@@ -32,7 +32,7 @@ router.get(
     '/google/redirect',
     passport.authenticate('google'),
     (req: any, res) => {
-       res.send(`<script>window.location.href = '${keys.frontEndUrl}' + '/auth/success.html'</script>`)
+       res.send(`<script>window.location.href = '${keys.frontEndUrl}'</script>`)
     }
 )
 
@@ -40,6 +40,7 @@ router.get(
     '/github/redirect',
     passport.authenticate('github'),
     (req: any, res) => {
-       res.send(`<script>window.location.href = '${keys.frontEndUrl}' + '/auth/success.html'</script>`)
+       //res.send(`<script>window.location.href = '${keys.frontEndUrl}' + '/auth/success.html'</script>`)
+       res.send(`<script>window.location.href = '${keys.frontEndUrl}'</script>`)
     }
 )
