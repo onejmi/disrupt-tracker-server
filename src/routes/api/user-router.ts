@@ -94,7 +94,9 @@ userRouter.patch('/tags', async (req: any, res) => {
         return
     }
     const color = req.body.color
-    const payload = { ...( name && { 'tags.$.name' : name } ), ...( color && { 'tags.$.color' : color } ) }
+    const payload = { 
+        ...( name && { 'tags.$.name' : name } ), 
+        ...( color >= 0 && { 'tags.$.color' : color } ) }
     if(Object.keys(payload).length === 0 && payload.constructor === Object) {
         res.json({ status: "Empty edit!" }) 
         return
