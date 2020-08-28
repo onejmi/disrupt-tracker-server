@@ -4,9 +4,8 @@
   "description": "Backend for disrupt-tracker",
   "main": "src/app.ts",
   "scripts": {
-    "compile": "tsc",
-    "start": "node ./dist/app.js",
-    "serve": "npm run compile && npm run start"
+    "build": "tsc",
+    "start": "node ./dist/app.js"
   },
   "repository": {
     "type": "git",
