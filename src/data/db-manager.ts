@@ -1,5 +1,6 @@
 import { MongoClient, Db } from 'mongodb'
-import keys from '../config/keys'
+//import keys from '../config/keys'
+const keys = JSON.parse(process.env.config_keys)
 import { UserCollection } from './collections/users'
 export let mongoClient : MongoClient
 export let database : Db

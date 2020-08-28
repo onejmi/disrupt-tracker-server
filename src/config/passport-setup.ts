@@ -6,8 +6,10 @@ const GithubStrategy = require('passport-github2')
 import { createTokenAuth } from "@octokit/auth-token";
 import { request } from "@octokit/request";
 import { ObjectId } from "mongodb"
-import keys from './keys'
+//import keys from './keys' (use when locally)
 import { userCollection } from '../data/collections/users'
+
+const keys = JSON.parse(process.env.config_keys)
 
 const googleOptions = {
     callbackURL: '/auth/google/redirect',

@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import keys from '../config/keys'
+//import keys from '../config/keys' local
+const keys = JSON.parse(process.env.config_keys)
 
 export const router = Router()
 const passport = require('passport')
