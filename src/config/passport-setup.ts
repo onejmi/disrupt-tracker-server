@@ -43,6 +43,7 @@ export function begin() {
                         tags: [],
                         threshold: 100,
                         nonce: 0,
+                        settings: { dark: false, tickSound: true },
                         profileImageUrl: profile.photos[0].value,
                         googleId: profile.id,
                     })
@@ -74,6 +75,7 @@ export function begin() {
                         tags: [],
                         threshold: 100,
                         nonce: 0,
+                        settings: { dark: false, tickSound: true },
                         profileImageUrl: profile.photos[0].value,
                         githubId: profile.id
                     })

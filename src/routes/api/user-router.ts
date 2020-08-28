@@ -144,3 +144,22 @@ userRouter.put('/nonce', async (req: any, res) => {
         await userCollection.update({_id: id}, { $set: { nonce: req.body.nonce } })
     res.json(update.upsertedId)
 })
+
+userRouter.get('/settings', async (req: any, res) => {
+    res.json(req.user?.settings)
+})
+
+userRouter.patch('/settings', async (req: any, res) => {
+    const id = new ObjectId(req.user._id)
+    let change : object
+    if(req.body.hasOwnProperty('dark')) {
+        change = { 'settings.dark' : req.body.dark }
+    } else if(req.body.hasOwnProperty('tickSound')) {
+        change = { 'settings.tickSound' : req.body.tickSound }
+    }
+    let update : UpdateWriteOpResult = await userCollection.update(
+        {_id: id},
+        { $set: change }
+    )
+    res.json(update.upsertedId)
+})

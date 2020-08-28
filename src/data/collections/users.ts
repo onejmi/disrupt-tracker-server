@@ -14,6 +14,11 @@ export interface Disruption {
     endTime: number
 }
 
+export interface Settings {
+    dark: boolean
+    tickSound: boolean
+}
+
 export interface User {
     email: string
     name: string
@@ -21,6 +26,7 @@ export interface User {
     tags: Tag[]
     threshold: number,
     nonce: number,
+    settings: Settings
     profileImageUrl?: string
     googleId?: string
     githubId?: string
