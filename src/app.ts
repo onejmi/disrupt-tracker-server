@@ -4,7 +4,8 @@ import { apiRouter } from './routes/api/api'
 
 import { setupDatabase } from './data/db-manager'
 import bodyParser from 'body-parser'
-import keys from './config/keys'
+//import keys from './config/keys' local
+const keys = JSON.parse(process.env.config_keys)
 
 const app = express()
 const server = require('http').createServer(app)
