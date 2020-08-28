@@ -21,6 +21,21 @@ const githubOptions = {
     clientSecret: keys.github.clientSecret
 }
 
+async function insertUser(profile: any, email: string) {
+    const res = await userCollection.insert({
+        email: email,
+        name: profile.displayName,
+        disruptions: [],
+        tags: [],
+        threshold: 100,
+        nonce: 0,
+        settings: { dark: false, tickSound: true },
+        profileImageUrl: profile.photos[0].value,
+        googleId: profile.id,
+    })
+    return res.ops[0]
+}
+
 export function begin() {
     passport.serializeUser((user: any, done: any) => {
         done(null, user._id)
@@ -36,18 +51,7 @@ export function begin() {
             async (accessToken, refreshToken, profile, done) => {
                 let user = await userCollection.get({ googleId: profile.id })
                 if(!user) {
-                    const res = await userCollection.insert({
-                        email: profile.emails[0].value,
-                        name: profile.displayName,
-                        disruptions: [],
-                        tags: [],
-                        threshold: 100,
-                        nonce: 0,
-                        settings: { dark: false, tickSound: true },
-                        profileImageUrl: profile.photos[0].value,
-                        googleId: profile.id,
-                    })
-                    user = res.ops[0]
+                    user = await insertUser(profile, profile.emails[0].value)
                 }
                 done(null, user)
             }
@@ -68,18 +72,7 @@ export function begin() {
                             email = res.data[0].email
                         }
                     } else email = profile.emails[0].value
-                    const res = await userCollection.insert({
-                        email: email,
-                        name: profile.displayName,
-                        disruptions: [],
-                        tags: [],
-                        threshold: 100,
-                        nonce: 0,
-                        settings: { dark: false, tickSound: true },
-                        profileImageUrl: profile.photos[0].value,
-                        githubId: profile.id
-                    })
-                    user = res.ops[0]
+                    user = insertUser(profile, email)
                 }
                 done(null, user)
             }
