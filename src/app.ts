@@ -17,7 +17,8 @@ const session = require('cookie-session')({
 const passport = require('passport')
 
 const port = process.env.PORT || 3000
-const frontendLocation = 'http://localhost:8080'
+//const frontendLocation = 'http://localhost:8080'
+const frontendLocation = 'https://d-tracker.github.io'
 
 console.log('Setting up database')
 setupDatabase().then(() => {
