@@ -6,7 +6,6 @@ import { setupDatabase } from './data/db-manager'
 import bodyParser from 'body-parser'
 //import keys from './config/keys' local
 const keys = JSON.parse(process.env.config_keys)
-console.log("GRRRRRR " + JSON.stringify(keys))
 
 const app = express()
 const server = require('http').createServer(app)
