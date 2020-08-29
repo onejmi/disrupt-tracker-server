@@ -16,7 +16,7 @@ const session = require('cookie-session')({
 })
 const passport = require('passport')
 
-const port = process.env.port || 3000
+const port = process.env.PORT || 3000
 const frontendLocation = 'http://localhost:8080'
 
 console.log('Setting up database')
