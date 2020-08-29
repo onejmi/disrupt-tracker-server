@@ -19,7 +19,7 @@ const passport = require('passport')
 
 const port = process.env.PORT || 3000
 //const frontendLocation = 'http://localhost:8080'
-const frontendLocation = 'https://d-tracker.github.io'
+const frontendLocation = 'https://habbit-beta.ml'
 
 console.log('Setting up database')
 setupDatabase().then(() => {
